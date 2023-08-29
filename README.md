@@ -1,4 +1,4 @@
-# bookbytes
+
 # BookBytes Web Application
 
 Welcome to the BookBytes system. This is a web application that allows users to discover, search for, and download ebooks using the Google Books API. Users can also create profiles, join reading groups, and participate in discussions.
