@@ -1,0 +1,12 @@
+# .gitignore
+
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Local development settings
+settings/local_settings.py
+
+# Database files
+db.sqlite3
