@@ -1,11 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 import requests 
+from django.views.generic import TemplateView
 
 # Create your views here.
-myname = "keith"
-def index(request):
-    return HttpResponse("Hello World")
+
+class SignUpView(TemplateView):
+    template_name = 'signup.html'
+
+class SignInView(TemplateView):
+    template_name = 'signin.html'
+
 
 def book_list(request):
     # API URL for fetching book data (replace with actual API endpoint)
@@ -25,3 +32,14 @@ def book_list(request):
         books.append({"title": title, "authors": authors, "cover_image": cover_image})
 
     return render(request, 'bytes/book_list.html', {'books': books})
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')  # Redirect to the homepage after registration
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
