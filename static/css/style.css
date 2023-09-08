@@ -172,7 +172,7 @@ c
 
 .gradient-bg 
 {
-  background-image: linear-gradient(to bottom, #ecff00, rgba(240, 252, 75, 0.829), #ecff00);
+  background-image: linear-gradient(to bottom, #0d1c34, rgb(42, 66, 104), #0d1c34);
   padding: 10px; /* Add some padding to make the content readable */
   color: #152c50;
 }
