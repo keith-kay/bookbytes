@@ -24,7 +24,7 @@ def loginPage(request):
         
         if user is not None:
             login(request, user)#pass in the request
-            return redirect('base')  # Redirect to the 'base' URL pattern
+            return redirect('home')  # Redirect to the 'base' URL pattern
     return render(request, 'signin')
 
 #logout user session
