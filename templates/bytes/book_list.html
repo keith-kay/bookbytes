@@ -1,18 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Book List</title>
+    <title>Books</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS for consistent image dimensions -->
+    <style>
+        /* Set a maximum width for the images */
+        .card-img {
+            max-width: 100%;
+            height: auto; /* Automatically adjust the height to maintain aspect ratio */
+        }
+    </style>
 </head>
 <body>
-    <h1>Book List</h1>
-    <ul>
-        {% for book in books %}
-        <li>
-            <img src="{{ book.cover_image }}" alt="{{ book.title }} Cover">
-            <h2>{{ book.title }}</h2>
-            <p>Authors: {{ book.authors }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>List of Books</h1>
+        <div class="row d-flex align-items-stretch">
+            {% for book in books %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <!-- Book Thumbnail -->
+                    <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" class="card-img" alt="{{ book.volumeInfo.title }}" style="width: 200px; height: 200px;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.volumeInfo.title }}</h5>
+                        <p class="card-text">Author(s): {{ book.volumeInfo.authors|join:", " }}</p>
+                        <p class="card-text">Publisher: {{ book.volumeInfo.publisher }}</p>
+                        <p class="card-text">Page Count: {{ book.volumeInfo.pageCount }}</p>
+                        
+                        <!-- Button to trigger the modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal{{ forloop.counter }}">Read More</button>
+                        
+                        <!-- "Read More" button moved here -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Modal for Book Details -->
+    {% for book in books %}
+    <div class="modal fade" id="bookModal{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel{{ forloop.counter }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel{{ forloop.counter }}">{{ book.volumeInfo.title }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Book Image -->
+                    <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" class="img-fluid mb-3" alt="{{ book.volumeInfo.title }}">
+                    
+                    <!-- Book Details -->
+                    <h5>{{ book.volumeInfo.title }}</h5>
+                    <p><strong>Author(s):</strong> {{ book.volumeInfo.authors|join:", " }}</p>
+                    <p><strong>Publisher:</strong> {{ book.volumeInfo.publisher }}</p>
+                    <p><strong>Page Count:</strong> {{ book.volumeInfo.pageCount }}</p>
+                    <p><strong>Description:</strong> {{ book.volumeInfo.description }}</p>
+                    <p><strong>ISBN-13:</strong> {{ book.volumeInfo.industryIdentifiers.0.identifier }}</p>
+                    <p><strong>ISBN-10:</strong> {{ book.volumeInfo.industryIdentifiers.1.identifier }}</p>
+                    <p><strong>Language:</strong> {{ book.volumeInfo.language }}</p>
+                    <p><strong>Average Rating:</strong> {{ book.volumeInfo.averageRating }} ({{ book.volumeInfo.ratingsCount }} ratings)</p>
+                    <p><strong>Maturity Rating:</strong> {{ book.volumeInfo.maturityRating }}</p>
+                    
+                    <!-- Links to Google Books and "Read Online" button -->
+                    <a href="{{ book.volumeInfo.previewLink }}" target="_blank" class="btn btn-success">Read Online</a>
+                    <p><a href="{{ book.volumeInfo.infoLink }}" target="_blank">More Info on Google Books</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- You can add additional buttons here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </body>
 </html>
