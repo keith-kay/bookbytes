@@ -54,6 +54,25 @@ def book_search(request):
             return JsonResponse({'error': 'Failed to retrieve book data from the API.'}, status=500)
     else:
         return JsonResponse({'error': 'This view is for handling POST requests only.'}, status=400)
+
+# retrieve best-selling books
+def best_selling_books(request):
+    # Replace 'YOUR_API_KEY' with your actual Google Books API key
+    api_key = 'AIzaSyDVJwXpB5u0nTh1QiLo-p7yPAipj0lSrS0'
+    # Construct the API URL with your key to fetch best-selling books
+    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Fiction&key={api_key}&maxResults=12'
+    
+    # Make a request to the Google Books API to fetch best-selling books
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        books = data.get('items', [])
+    else:
+        # Handle API request error
+        books = []
+
+    return render(request, 'bytes/home.html', {'books': books})
 #register new user
 def register(request):
 

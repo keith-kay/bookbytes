@@ -1,52 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Books</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Custom CSS for consistent image dimensions -->
-    <style>
-        /* Set a maximum width for the images */
-        .card-img {
-            max-width: 100%;
-            height: auto; /* Automatically adjust the height to maintain aspect ratio */
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>List of Books</h1>
-        <div class="row d-flex align-items-stretch">
-            {% for book in books %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <!-- Book Thumbnail -->
-                    <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" class="card-img" alt="{{ book.volumeInfo.title }}" style="width: 200px; height: 200px;">
+{% extends "bytes/base.html" %}
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{ book.volumeInfo.title }}</h5>
-                        <p class="card-text">Author(s): {{ book.volumeInfo.authors|join:", " }}</p>
-                        <p class="card-text">Publisher: {{ book.volumeInfo.publisher }}</p>
-                        <p class="card-text">Page Count: {{ book.volumeInfo.pageCount }}</p>
-                        
-                        <!-- Button to trigger the modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal{{ forloop.counter }}">Read More</button>
-                        
-                        <!-- "Read More" button moved here -->
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+{% block title %}Book|Search{% endblock %}
+
+{% block subject %}
+<h1 class="h3 mb-0 text-gray-800">Search Results</h1>
+{% endblock %}
+
+{% block content %}
+{% for book in books %}
+<div class="col-md-4 mb-4">
+    <div class="card h-100">
+    <!-- <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+    </div> -->
+    <img class="card-img-top mt-3 mx-3" src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="{{ book.volumeInfo.title }}" style="height: 150px; width: 150px;">
+    <div class="card-body">
+        <h5 class="card-title">{{ book.volumeInfo.title }}</h5>
+        <p class="card-text">Author(s): {{ book.volumeInfo.authors|join:", " }}</p>
+        <p class="card-text">Publisher: {{ book.volumeInfo.publisher }}</p>
+        <p class="card-text">Page Count: {{ book.volumeInfo.pageCount }}</p>
+        
+            <!-- <div class="btn-group">
+                <a href="{{ book.volumeInfo.previewLink }}" class="btn btn-sm btn-outline-secondary" target="_blank">View Details</a>
+            </div> -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bookModal{{ forloop.counter }}">Read More</button>
+        
     </div>
-
-    <!-- Include Bootstrap JS and jQuery (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- Modal for Book Details -->
-    {% for book in books %}
+</div>
+</div>
+{% endfor %}
+{% for book in books %}
     <div class="modal fade" id="bookModal{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel{{ forloop.counter }}" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -77,12 +60,18 @@
                     <p><a href="{{ book.volumeInfo.infoLink }}" target="_blank">More Info on Google Books</a></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     <!-- You can add additional buttons here -->
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
+
+
+
+
+
+
+
