@@ -13,4 +13,8 @@ urlpatterns = [
     path('search/', views.book_search, name='book_search'),
     path('books/', views.book_search, name='book_list'),
     path('dashboard/', views.best_selling_books, name='home'),
+    path('mystery-books/', views.mystery, name='mystery'),
+    path('romance-books/', views.romance, name='romance'),
+    path('fantasy-books/', views.fantasy, name='fantasy'),
+    path('comic-books/', views.comic, name='comic')
 ]

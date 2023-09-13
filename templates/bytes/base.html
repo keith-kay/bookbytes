@@ -23,6 +23,7 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+    {% block function %} {% endblock %}
 </head>
 
 <body id="page-top">
@@ -64,11 +65,10 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Available Genres:</h6>
-                        <a class="collapse-item" href="buttons.html">Fiction</a>
-                        <a class="collapse-item" href="cards.html">Mystery</a>
-                        <a class="collapse-item" href="cards.html">Fantasy</a>
-                        <a class="collapse-item" href="cards.html">Romance</a>
-                        <a class="collapse-item" href="cards.html">Science Fiction</a>
+                        <a class="collapse-item" href="{% url 'comic' %}">Anime</a>
+                        <a class="collapse-item" href="{% url 'mystery' %}">Mystery</a>
+                        <a class="collapse-item" href="{% url 'fantasy' %}">Fantasy</a>
+                        <a class="collapse-item" href="{% url 'romance' %}">Romance</a>
                     </div>
                 </div>
             </li>

@@ -2,6 +2,20 @@
 
 {% block title %}Dashboard{% endblock %}
 
+{% block function %}
+<script>
+    function refreshPage() {
+      window.location.reload();
+    }
+
+    setInterval(refreshPage, 45000); 
+</script>
+{% endblock %}
+
+{% block subject %}
+<h1 class="h3 mb-0 text-gray-800">Available Titles</h1>
+{% endblock %}
+
 {% block content %}
 {% for book in books %}
 <div class="col-md-4 mb-4">

@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, JsonResponse  
-import requests 
+import requests, random
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 
+api_key = 'AIzaSyDVJwXpB5u0nTh1QiLo-p7yPAipj0lSrS0'
 # Create your views here.
 
 class SignUpView(TemplateView):
@@ -55,24 +56,131 @@ def book_search(request):
     else:
         return JsonResponse({'error': 'This view is for handling POST requests only.'}, status=400)
 
-# retrieve best-selling books
+# retrieve fiction books
 def best_selling_books(request):
-    # Replace 'YOUR_API_KEY' with your actual Google Books API key
-    api_key = 'AIzaSyDVJwXpB5u0nTh1QiLo-p7yPAipj0lSrS0'
-    # Construct the API URL with your key to fetch best-selling books
-    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Fiction&key={api_key}&maxResults=12'
-    
+    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Fiction&key={api_key}&maxResults=40'
     # Make a request to the Google Books API to fetch best-selling books
     response = requests.get(api_url)
 
     if response.status_code == 200:
         data = response.json()
         books = data.get('items', [])
+
+        # Generate a random starting index
+        num_books = len(books)
+        if num_books > 0:
+            random_start_index = random.randint(0, num_books - 1)
+            # Select 12 books starting from the random index
+            selected_books = books[random_start_index:random_start_index + 12]
+        else:
+            selected_books = []
     else:
         # Handle API request error
-        books = []
+        selected_books = []
 
-    return render(request, 'bytes/home.html', {'books': books})
+    return render(request, 'bytes/home.html', {'books': selected_books})
+
+#retrieve mystery books
+def mystery(request):
+      # Retrieve url
+    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Mystery&key={api_key}&maxResults=40'
+    # Make a request to the Google Books API to fetch best-selling books
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        books = data.get('items', [])
+
+        # Generate a random starting index
+        num_books = len(books)
+        if num_books > 0:
+            random_start_index = random.randint(0, num_books - 1)
+            # Select 12 books starting from the random index
+            selected_books = books[random_start_index:random_start_index + 12]
+        else:
+            selected_books = []
+    else:
+        # Handle API request error
+        selected_books = []
+
+    return render(request, 'bytes/home.html', {'books': selected_books})
+
+#retrieve romance books
+def romance(request):
+      # Retrieve url
+    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Romance&key={api_key}&maxResults=40'
+    # Make a request to the Google Books API to fetch best-selling books
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        books = data.get('items', [])
+
+        # Generate a random starting index
+        num_books = len(books)
+        if num_books > 0:
+            random_start_index = random.randint(0, num_books - 1)
+            # Select 12 books starting from the random index
+            selected_books = books[random_start_index:random_start_index + 12]
+        else:
+            selected_books = []
+    else:
+        # Handle API request error
+        selected_books = []
+
+    return render(request, 'bytes/home.html', {'books': selected_books})
+
+#retrieve fantasy books
+def fantasy(request):
+    # Retrieve url
+    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Fantasy&key={api_key}&maxResults=40'
+    # Make a request to the Google Books API to fetch best-selling books
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        books = data.get('items', [])
+
+        # Generate a random starting index
+        num_books = len(books)
+        if num_books > 0:
+            random_start_index = random.randint(0, num_books - 1)
+            # Select 12 books starting from the random index
+            selected_books = books[random_start_index:random_start_index + 12]
+        else:
+            selected_books = []
+    else:
+        # Handle API request error
+        selected_books = []
+
+    return render(request, 'bytes/home.html', {'books': selected_books})
+
+#retrieve comic books
+#retrieve fantasy books
+def comic(request):
+    # Retrieve url
+    api_url = f'https://www.googleapis.com/books/v1/volumes?q=subject:Anime&key={api_key}&maxResults=40'
+    # Make a request to the Google Books API to fetch best-selling books
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        books = data.get('items', [])
+
+        # Generate a random starting index
+        num_books = len(books)
+        if num_books > 0:
+            random_start_index = random.randint(0, num_books - 1)
+            # Select 12 books starting from the random index
+            selected_books = books[random_start_index:random_start_index + 12]
+        else:
+            selected_books = []
+    else:
+        # Handle API request error
+        selected_books = []
+
+    return render(request, 'bytes/home.html', {'books': selected_books})
+
 #register new user
 def register(request):
 
