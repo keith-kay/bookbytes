@@ -15,3 +15,6 @@ Welcome to the BookBytes system. This is a web application that allows users to 
 - Participate in discussions within reading groups.
 - Admin interface for managing app data.
 
+#bookbytes-blockpost
+https://medium.com/@keithrhova/turning-pages-virtually-exploring-bookbytes-ccf26431b8c8
+
