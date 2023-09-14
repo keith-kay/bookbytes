@@ -10,6 +10,7 @@ urlpatterns = [
     path('signup/', TemplateView.as_view(template_name='bytes/signup.html'), name='signup'),
     path('login/', views.loginPage, name="loginPage"),
     path('logout/',views.logoutPage, name="logout"),
+    path('register/', views.register, name = 'register'),
     path('search/', views.book_search, name='book_search'),
     path('books/', views.book_search, name='book_list'),
     path('dashboard/', views.best_selling_books, name='home'),
