@@ -183,13 +183,18 @@ def comic(request):
 
 #register new user
 def register(request):
-
+    
+    form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')  # Redirect to the homepage after registration
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
+            form.save()
+            #login starts here
+            username = request.POST['username'] 
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("index")
+    context = {"form": form}
+    return render(request, 'bytes/signup.html', context)
